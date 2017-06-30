@@ -1,4 +1,4 @@
-package main
+package util
 
 import (
 	"fmt"
@@ -6,7 +6,7 @@ import (
 	_ "github.com/lib/pq" //Importing needed postgres driver
 )
 
-func main() {
-	fmt.Println("Util package, v0.1")
+func version() {
+	fmt.Println("Util package, v0.2")
 	fmt.Println("Author: Simon Lindgren, email: simon.g.lindgren@gmail.com")
 }
