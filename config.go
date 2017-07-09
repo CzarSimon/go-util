@@ -1,9 +1,6 @@
 package util
 
-import (
-	"fmt"
-	"os"
-)
+import "fmt"
 
 //PGConfig holds connection parameters for a postgresql db.
 type PGConfig struct {
@@ -29,16 +26,6 @@ type ServerConfig struct {
 //ToURL accepts a route as a parameter and turns the route + ServerConfig to a full url
 func (server ServerConfig) ToURL(route string) string {
 	return fmt.Sprintf("%s://%s:%s/%s", server.Protocol, server.Host, server.Port, route)
-}
-
-//GetEnvVar gets an envrionment variable based on a key, returns a default value
-//if the environment variable is not found
-func GetEnvVar(varKey, nilValue string) string {
-	envVar := os.Getenv(varKey)
-	if envVar != "" {
-		return envVar
-	}
-	return nilValue
 }
 
 //SQLiteConfig holds connection parameters for a SQLlite database
