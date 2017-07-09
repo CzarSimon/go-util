@@ -42,3 +42,14 @@ func SendErrRes(res http.ResponseWriter, err error) {
 		http.Error(res, err.Error(), http.StatusInternalServerError)
 	}
 }
+
+//SendOK sends status code 200 to the requestor
+func SendOK(res http.ResponseWriter) {
+	res.WriteHeader(http.StatusOK)
+	res.Write([]byte("200 - OK"))
+}
+
+//PlaceholderHandler is a dummy handler to ease development
+func PlaceholderHandler(res http.ResponseWriter, req *http.Request) {
+	SendOK(res)
+}

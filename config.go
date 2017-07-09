@@ -40,3 +40,15 @@ func GetEnvVar(varKey, nilValue string) string {
 	}
 	return nilValue
 }
+
+//SQLiteConfig holds connection parameters for a SQLlite database
+type SQLiteConfig struct {
+	File string
+}
+
+//GetSQLiteConfig creates a SQLiteConfig based on the parameter filename
+func GetSQLiteConfig(filename string) SQLiteConfig {
+	return SQLiteConfig{
+		File: filename,
+	}
+}

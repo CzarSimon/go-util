@@ -2,6 +2,7 @@ package util
 
 import (
 	"database/sql"
+	"fmt"
 	"log"
 )
 
@@ -30,9 +31,14 @@ func CheckErrAndRollback(err error, tx *sql.Tx) bool {
 	return false
 }
 
-//LogErr logs the supplied error to the console
+// LogErr logs the supplied error to the console
 func LogErr(err error) {
 	log.Println(err.Error())
+}
+
+// PrintErr Prints the supplied error to stdout
+func PrintErr(err error) {
+	fmt.Println(err.Error())
 }
 
 //IsErr checks if an error is not nil
