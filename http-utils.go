@@ -2,7 +2,6 @@ package util
 
 import (
 	"encoding/json"
-	"fmt"
 	"net/http"
 )
 
@@ -10,7 +9,7 @@ import (
 func SendPlainTextRes(res http.ResponseWriter, msg string) {
 	res.Header().Set("Content-Type", "text/plain")
 	res.Header().Set("Access-Control-Allow-Origin", "*")
-	res.Write([]byte(fmt.Sprintf("%x", msg)))
+	res.Write([]byte(msg))
 }
 
 //JSONRes contains a response
