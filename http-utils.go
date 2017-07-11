@@ -5,6 +5,9 @@ import (
 	"net/http"
 )
 
+// StatusOK The status 200 return message
+const StatusOK string = "200 - OK"
+
 //SendPlainTextRes sends a plain text message given as an input
 func SendPlainTextRes(res http.ResponseWriter, msg string) {
 	res.Header().Set("Content-Type", "text/plain")
@@ -45,7 +48,7 @@ func SendErrRes(res http.ResponseWriter, err error) {
 //SendOK sends status code 200 to the requestor
 func SendOK(res http.ResponseWriter) {
 	res.WriteHeader(http.StatusOK)
-	res.Write([]byte("200 - OK"))
+	res.Write([]byte(StatusOK))
 }
 
 //PlaceholderHandler is a dummy handler to ease development
