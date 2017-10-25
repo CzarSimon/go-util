@@ -2,6 +2,7 @@ package util
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"net/http"
 )
@@ -51,6 +52,13 @@ func SendErrRes(res http.ResponseWriter, err error) {
 	}
 }
 
+// SendErrStatus Sends an error and a given status code to the requestor
+func SendErrStatus(res http.ResponseWriter, err error, statusCode int) {
+	if err != nil {
+		http.Error(res, err.Error(), statusCode)
+	}
+}
+
 //SendOK sends status code 200 to the requestor
 func SendOK(res http.ResponseWriter) {
 	res.WriteHeader(http.StatusOK)
@@ -71,4 +79,13 @@ func SendUnauthorized(res http.ResponseWriter) {
 //PlaceholderHandler is a dummy handler to ease development
 func PlaceholderHandler(res http.ResponseWriter, req *http.Request) {
 	SendOK(res)
+}
+
+// ParseValueFromQuery Parses a query value from request
+func ParseValueFromQuery(req *http.Request, key, errorMsg string) (string, error) {
+	value := req.URL.Query().Get(key)
+	if value == "" {
+		return "", errors.New(errorMsg)
+	}
+	return value, nil
 }
