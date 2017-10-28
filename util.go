@@ -3,6 +3,7 @@ package util
 import (
 	"fmt"
 	"os"
+	"time"
 
 	_ "github.com/lib/pq" //Importing needed postgres driver
 )
@@ -22,4 +23,10 @@ func FileExists(path string) (bool, error) {
 		return false, nil
 	}
 	return true, err
+}
+
+// IsWeekend Checks if the currenct day (timezone UTC) is a weekend day
+func IsWeekend() bool {
+	currentDay := time.Now().UTC().Weekday()
+	return currentDay == time.Saturday || currentDay == time.Sunday
 }
