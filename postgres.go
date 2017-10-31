@@ -9,7 +9,7 @@ import (
 
 // onnectPG Ceates a connection to a postgresql DB, exits if there is an error
 func ConnectPG(config PGConfig) *sql.DB {
-	db, err := ConnectDBErr(config)
+	db, err := ConnectPGErr(config)
 	CheckErrFatal(err)
 	return db
 }
