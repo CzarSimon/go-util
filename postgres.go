@@ -7,19 +7,32 @@ import (
 	"strings"
 )
 
-//ConnectPG creates a connection to a postgresql DB
+// onnectPG Ceates a connection to a postgresql DB, exits if there is an error
 func ConnectPG(config PGConfig) *sql.DB {
-	connStr := fmt.Sprintf(
-		"host=%s user=%s password=%s dbname=%s sslmode=disable",
-		config.Host, config.User, config.Password, config.DB)
-	db, err := sql.Open("postgres", connStr)
-	CheckErrFatal(err)
-	err = db.Ping()
+	db, err := ConnectDBErr(config)
 	CheckErrFatal(err)
 	return db
 }
 
-//BytesToIntSlice turns a slice of bytes to a slice of ints of a user specified size
+// ConnectPGErr Creates a connection to a postgres DB, returns an error if failed
+func ConnectPGErr(config PGConfig) (*sql.DB, error) {
+	connStr := fmt.Sprintf(
+		"host=%s user=%s password=%s dbname=%s port=%s sslmode=disable",
+		config.Host, config.User, config.Password, config.DB, config.Port)
+	db, err := sql.Open("postgres", connStr)
+	if err != nil {
+		LogErr(err)
+		return db, err
+	}
+	err = db.Ping()
+	if err != nil {
+		LogErr(err)
+		return db, err
+	}
+	return db, nil
+}
+
+// BytesToIntSlice turns a slice of bytes to a slice of ints of a user specified size
 func BytesToIntSlice(bytes []byte, intBits int) ([]int64, error) {
 	baseStr := PgArrayToString(bytes)
 	intSlice := make([]int64, 0)
@@ -46,13 +59,13 @@ func BytesToFloatSlice(bytes []byte, floatBits int) ([]float64, error) {
 	return floatSlice, nil
 }
 
-//BytesToStrSlice turns a byte array into a string array
+// BytesToStrSlice turns a byte array into a string array
 func BytesToStrSlice(bytes []byte) []string {
 	baseStr := PgArrayToString(bytes)
 	return strings.Split(baseStr, ",")
 }
 
-//PgArrayToString turns a byte arra into a string without enclosing {}
+// PgArrayToString turns a byte arra into a string without enclosing {}
 func PgArrayToString(bytes []byte) string {
 	baseStr := string(bytes)
 	return strings.Trim(baseStr, "{}")
